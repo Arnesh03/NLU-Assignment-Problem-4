@@ -185,9 +185,7 @@ The models were evaluated using an 80/20 train-test split. The performance metri
 \end{figure}
 
 \subsection{Analysis}
-Naive Bayes actually achieved the best performance here. This suggests that the word choices in Sports and Politics are so distinct that the "naive" independence assumption doesn't really handicap the model. 
-
-Looking at the confusion matrix (Figure 4), we can see where the errors happen. For Naive Bayes, there were very few false positives for Politics, but some Sports articles were misclassified.
+Naive Bayes achieved the best overall performance, likely due to the highly distinct vocabularies of the two domains. Logistic Regression and SVM followed closely. Random Forest, while still very accurate at 92.7\%, slightly lagged behind the linear models. This suggests that the relationship between word frequencies and classes is largely linear for this specific task, and the additional complexity of an ensemble forest doesn't provide a boost in this binary classification scenario.
 
 \begin{figure}[H]
     \centering
