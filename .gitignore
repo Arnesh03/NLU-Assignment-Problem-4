@@ -1,0 +1,13 @@
+*.log
+*.pdf
+.DS_Store
+B15CS001/
+M25CSE008_prob1.*
+M25CSE008_prob2.*
+M25CSE008_prob3.*
+corpus.txt
+neg.txt
+pos.txt
+read_assignment.py
+generate_plots.py
+M25CSE008_prob4_report.md
