@@ -8,6 +8,7 @@
 \usepackage{hyperref}
 \usepackage{float}
 \usepackage{caption}
+\usepackage{subcaption}
 \usepackage{xcolor}
 \usepackage{titlesec}
 \usepackage{fancyhdr}
@@ -188,8 +189,24 @@ Looking at the confusion matrix (Figure 4), we can see where the errors happen. 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{confusion_matrix.png}
-    \caption{Confusion Matrix for the Naive Bayes Classifier.}
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{cm_nb.png}
+        \caption{Naive Bayes}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{cm_lr.png}
+        \caption{Logistic Regression}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{cm_svm.png}
+        \caption{Linear SVM}
+    \end{subfigure}
+    \caption{Confusion Matrices for all three machine learning models.}
 \end{figure}
 
 \clearpage
