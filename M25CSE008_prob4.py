@@ -3,6 +3,7 @@ from sklearn.datasets import fetch_20newsgroups
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.linear_model import LogisticRegression, SGDClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
@@ -103,7 +104,8 @@ def main():
     models = [
         ('Naive Bayes', MultinomialNB()),
         ('Logistic Regression', LogisticRegression(max_iter=1000)),
-        ('Linear SVM', SGDClassifier(max_iter=1000, tol=1e-3))
+        ('Linear SVM', SGDClassifier(max_iter=1000, tol=1e-3)),
+        ('Random Forest', RandomForestClassifier(n_estimators=100, random_state=42))
     ]
     
     print("\n" + "="*50)
