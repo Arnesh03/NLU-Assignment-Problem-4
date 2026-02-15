@@ -1,4 +1,4 @@
-# NLU Assignment 1: Sports vs Politics Classifier
+# Sports vs Politics Classifier
 **Problem 4 - Submission**
 
 This is my project for classifying text documents as either **Sports** or **Politics**. I used a few different Machine Learning methods to see which one works best.
