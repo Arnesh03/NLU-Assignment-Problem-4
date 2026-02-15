@@ -9,7 +9,13 @@ The main idea was to see if we can tell these two topics apart just by looking a
 - **Sports**: baseball and hockey
 - **Politics**: guns, mideast, and misc politics
 
-Everything was processed using **TF-IDF Vectorization** (including Bigrams) to help catch phrases like "white house" or "home run".
+Everything was processed using a combination of techniques to find the best representation for text.
+
+## Features & Representation
+I used the following three main techniques for the analysis:
+1.  **Bag of Words (BoW)**: Used as a baseline to count raw word frequencies.
+2.  **TF-IDF**: Used as the primary representation to weight words by their importance and uniqueness across documents.
+3.  **n-grams (Unigrams + Bigrams)**: I used `ngram_range=(1,2)` to help the models pick up on phrases like "white house" or "home run", not just single words.
 
 ## The Models I Tried
 I evaluated four different models to compare them:

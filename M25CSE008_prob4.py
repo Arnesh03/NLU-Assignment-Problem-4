@@ -8,11 +8,11 @@ from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
 
-# Problem 4: Sports vs Politics Classifier with Comprehensive Analysis
-# Roll Number: M25CSE008
+# classifier for sports vs politics
+# roll number: M25CSE008
 
 def print_dataset_stats(X, y):
-    # just print some basics about the data
+    # simple function to print data stats
     print("\n" + "="*50)
     print("DATASET STATISTICS")
     print("="*50)
@@ -20,7 +20,7 @@ def print_dataset_stats(X, y):
     print(f"Sports documents: {y.count('Sports')}")
     print(f"Politics documents: {y.count('Politics')}")
     
-    # Calculate average document length
+    # average doc length
     lengths = [len(doc.split()) for doc in X]
     print(f"\nAverage document length: {np.mean(lengths):.1f} words")
     print(f"Min length: {min(lengths)} words")
@@ -28,23 +28,23 @@ def print_dataset_stats(X, y):
     print(f"Median length: {np.median(lengths):.1f} words")
 
 def compare_vectorizers(X_train, X_test, y_train, y_test):
-    # check BoW vs TF-IDF to see which one is better
+    # checking if TF-IDF is better than just counting words
     print("\n" + "="*50)
     print("FEATURE REPRESENTATION COMPARISON")
     print("="*50)
     
-    # Test with Bag of Words (CountVectorizer)
+    # testing Bag of Words
     bow_pipeline = Pipeline([
-        ('vectorizer', CountVectorizer(stop_words='english', max_features=5000)),
+        ('vectorizer', CountVectorizer(stop_words='english', max_features=5000, ngram_range=(1, 2))),
         ('clf', MultinomialNB())
     ])
     bow_pipeline.fit(X_train, y_train)
     bow_pred = bow_pipeline.predict(X_test)
     bow_acc = accuracy_score(y_test, bow_pred)
     
-    # Test with TF-IDF
+    # testing TF-IDF
     tfidf_pipeline = Pipeline([
-        ('vectorizer', TfidfVectorizer(stop_words='english', max_features=5000)),
+        ('vectorizer', TfidfVectorizer(stop_words='english', max_features=5000, ngram_range=(1, 2))),
         ('clf', MultinomialNB())
     ])
     tfidf_pipeline.fit(X_train, y_train)
@@ -58,13 +58,13 @@ def compare_vectorizers(X_train, X_test, y_train, y_test):
 def main():
     print("Loading the 20 Newsgroups dataset...")
     
-    # categories we need for the assignment
+    # categories to fetch
     categories = [
         'rec.sport.baseball', 'rec.sport.hockey',
         'talk.politics.guns', 'talk.politics.mideast', 'talk.politics.misc'
     ]
     
-    # Download the data
+    # download data
     try:
         data = fetch_20newsgroups(subset='all', categories=categories, 
                                   remove=('headers', 'footers', 'quotes'))
@@ -74,7 +74,7 @@ def main():
 
     print(f"Documents loaded: {len(data.data)}")
     
-    # Prepare binary labels
+    # making lists for text and labels
     X_text = []
     y_labels = []
     
@@ -89,18 +89,18 @@ def main():
             X_text.append(doc)
             y_labels.append('Politics')
     
-    # Print dataset statistics
+    # print stats
     print_dataset_stats(X_text, y_labels)
     
-    # Split data
+    # split train/test
     X_train, X_test, y_train, y_test = train_test_split(
         X_text, y_labels, test_size=0.2, random_state=42
     )
     
-    # Compare BoW vs TF-IDF
+    # see which vectorizer is better
     compare_vectorizers(X_train, X_test, y_train, y_test)
     
-    # Define models to compare
+    # models list
     models = [
         ('Naive Bayes', MultinomialNB()),
         ('Logistic Regression', LogisticRegression(max_iter=1000)),
@@ -119,23 +119,23 @@ def main():
         print(f"Training: {name}")
         print('='*50)
         
-        # Create pipeline with TF-IDF
+        # build pipeline
         pipeline = Pipeline([
-            ('tfidf', TfidfVectorizer(stop_words='english', max_features=10000)),
+            ('tfidf', TfidfVectorizer(stop_words='english', max_features=10000, ngram_range=(1, 2))),
             ('clf', model),
         ])
         
-        # Train
+        # train
         pipeline.fit(X_train, y_train)
         
-        # Predict
+        # predict
         predictions = pipeline.predict(X_test)
         acc = accuracy_score(y_test, predictions)
         results[name] = acc
         
         print(f"\nAccuracy: {acc:.4f}")
         
-        # Confusion Matrix stuff
+        # confusion matrix
         cm = confusion_matrix(y_test, predictions, labels=['Politics', 'Sports'])
         print("\nConfusion Matrix:")
         print("                Predicted")
@@ -143,11 +143,11 @@ def main():
         print(f"Actual Politics    {cm[0][0]:4d}    {cm[0][1]:4d}")
         print(f"       Sports      {cm[1][0]:4d}    {cm[1][1]:4d}")
         
-        # Classification Report
+        # metrics
         print("\nDetailed Classification Report:")
         print(classification_report(y_test, predictions))
     
-    # Final Summary
+    # summary
     print("\n" + "="*50)
     print("FINAL SUMMARY")
     print("="*50)
@@ -157,11 +157,11 @@ def main():
     best_model = max(results, key=results.get)
     print(f"\n🏆 Best Model: {best_model} ({results[best_model]:.4f})")
     
-    # Vocabulary size info
+    # feature info
     print("\n" + "="*50)
     print("FEATURE SPACE INFORMATION")
     print("="*50)
-    vectorizer = TfidfVectorizer(stop_words='english', max_features=10000)
+    vectorizer = TfidfVectorizer(stop_words='english', max_features=10000, ngram_range=(1, 2))
     vectorizer.fit(X_train)
     print(f"Vocabulary size: {len(vectorizer.vocabulary_)}")
     print(f"Feature limit: 10000")
